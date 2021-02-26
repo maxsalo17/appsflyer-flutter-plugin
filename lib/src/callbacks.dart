@@ -13,7 +13,10 @@ Future<void> _methodCallHandler(MethodCall call) async {
   switch (call.method) {
     case 'callListener':
       try {
-        dynamic callMap = jsonDecode('${call.arguments}');
+        dynamic callMap = call.arguments?.runtimeType == String
+            ? jsonDecode(call.arguments)
+            : call.arguments;
+
         switch (callMap["id"]) {
           case "onAppOpenAttribution":
           case "onInstallConversionData":
